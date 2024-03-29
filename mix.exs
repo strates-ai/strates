@@ -43,13 +43,30 @@ defmodule Strates.MixProject do
       {:phoenix_live_dashboard, "~> 0.7.2"},
       {:esbuild, "~> 0.5", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.1.8", runtime: Mix.env() == :dev},
-      {:swoosh, "~> 1.3"},
-      {:finch, "~> 0.13"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+
+      # Query
+      # {:query_builder, "~> 1.0"},
+
+      # Email
+      {:swoosh, "~> 1.3"},
+
+      # HTTP client
+      {:tesla, "~> 1.8.0"},
+      {:finch, "~> 0.13"},
+
+      # Testing
+      {:ex_machina, "~> 2.7.0", only: [:dev, :test]},
+      {:exvcr, "~> 0.15", only: [:dev, :test]},
+      {:faker, "0.18.0", only: [:dev, :test]},
+
+      # Code quality
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      # {:styler, "~> 0.11", only: [:dev, :test], runtime: false},
     ]
   end
 
