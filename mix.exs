@@ -32,6 +32,7 @@ defmodule Strates.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.7.1"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
@@ -65,7 +66,7 @@ defmodule Strates.MixProject do
       {:faker, "0.18.0", only: [:dev, :test]},
 
       # Code quality
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
       # {:styler, "~> 0.11", only: [:dev, :test], runtime: false},
     ]
   end

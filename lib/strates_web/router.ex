@@ -1,6 +1,8 @@
 defmodule StratesWeb.Router do
   use StratesWeb, :router
 
+  import StratesWeb.UserAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,10 +10,15 @@ defmodule StratesWeb.Router do
     plug :put_root_layout, {StratesWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_user
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :authenticated do
+    plug :require_authenticated_user
   end
 
   scope "/", StratesWeb do
@@ -40,5 +47,19 @@ defmodule StratesWeb.Router do
       live_dashboard "/dashboard", metrics: StratesWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+  end
+
+  scope "/", StratesWeb do
+    pipe_through [:browser, :authenticated]
+
+    live_session :require_authenticated_user,
+      on_mount: [{StratesWeb.UserOnMountHooks, :ensure_authenticated}] do
+      live "/users/settings", UserSettingsLive, :edit
+      live "/users/settings/confirm-email/:token", UserSettingsLive, :confirm_email
+    end
+  end
+
+  scope "/" do
+    use StratesWeb.AuthRoutes
   end
 end
